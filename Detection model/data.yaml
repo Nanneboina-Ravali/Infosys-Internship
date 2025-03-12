@@ -1,0 +1,10 @@
+path: "/content/drive/My Drive/AI Based Fraud Management System for UID Aadhar/Detection model/data.yaml"
+train: "/content/drive/My Drive/AI Based Fraud Management System for UID Aadhar/Detection model/detection_dataset/dataset/dataset/dataset/images/train"
+val: "/content/drive/My Drive/AI Based Fraud Management System for UID Aadhar/Detection model/detection_dataset/dataset/dataset/dataset/images/val"
+
+
+names:
+    0: name
+    1: uid
+    2: address
+

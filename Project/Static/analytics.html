@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <div class="user-info">
+            <img src="https://via.placeholder.com/50" alt="Avatar" class="avatar">
+            <span class="username">Aaryan Pandit</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <button class="menu-btn" id="open-sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-content">
+            <h1>Result Analytics</h1>
+        </div>
+        <button id="theme-toggle" class="theme-toggle">
+            <i class="fas fa-moon"></i> Dark Mode
+        </button>
+    </header>
+
+    <!-- Analytics Content -->
+    <!-- <div class="dashboard-container">
+        <section class="analytics-section">
+            <h2>Aadhaar Data Analytics</h2>
+            <canvas id="analytics-chart"></canvas>
+        </section>
+    </div> -->
+
+    <div class="charts">
+        <div class="chart" id="uidChartContainer">
+            <h3>UID Match Score Distribution</h3>
+            <canvas id="uidChart"></canvas>
+        </div>
+
+        <div class="chart" id="nameChartContainer">
+            <h3>Name Match Score Distribution</h3>
+            <canvas id="nameChart"></canvas>
+        </div>
+
+        <div class="chart" id="addressChartContainer">
+            <h3>Address Match Score Comparison</h3>
+            <canvas id="addressChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <p>© 2025 Aadhaar Data Dashboard. All rights reserved.</p>
+    </footer>
+    <script src="/static/dashboard.js"></script>
+    <script>
+        const data = sessionStorage.getItem('responseData') ? JSON.parse(sessionStorage.getItem('responseData')) : [];
+            const uidData = data.map(item => item["UID Match Score"]);
+            const nameData = data.map(item => item["Name Match Score"]);
+            const addressData = data.map(item => item["Address Match Score"]);
+            console.log("...", document.getElementById('uidChart'));
+            console.log("...", document.getElementById('nameChart'));
+            console.log("...", document.getElementById('addressChart'));
+            // UID Match Score Bar Chart
+            const uidChart = new Chart(document.getElementById('uidChart'), {
+                type: 'bar',
+                data: {
+                    labels: data.map(item => item.SrNo),
+                    datasets: [{
+                        label: 'UID Match Score',
+                        data: uidData,
+                        backgroundColor: '#4CAF50',
+                        borderColor: '#388E3C',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Name Match Score Pie Chart
+            const nameChart = new Chart(document.getElementById('nameChart'), {
+                type: 'pie',
+                data: {
+                    labels: data.map(item => item.SrNo),
+                    datasets: [{
+                        label: 'Name Match Score',
+                        data: nameData,
+                        backgroundColor: ['#FFC107', '#FF9800', '#FF5722', '#9C27B0'],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Address Match Score Radar Chart
+            const addressChart = new Chart(document.getElementById('addressChart'), {
+                type: 'radar',
+                data: {
+                    labels: data.map(item => item.SrNo),
+                    datasets: [{
+                        label: 'Address Match Score',
+                        data: addressData,
+                        backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                        borderColor: '#2196F3',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scale: {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    
+
+</body>
+
+</html>
